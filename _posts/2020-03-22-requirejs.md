@@ -6,8 +6,7 @@ author: "fedono"
 
 [中文文档](https://wenku.baidu.com/view/836bd9c8112de2bd960590c69ec3d5bbfd0adad2.html)
 
-![img](../assets/imgs/requirejs/entry.png)
-
+---
 
 - RequireJS是一个工具库，主要用于客户端的模块管理。它可以让客户端的代码分成一个个模块，实现异步或动态加载，从而提高代码的性能和可维护性。它的模块管理遵守[AMD规范](https://github.com/amdjs/amdjs-api/wiki/AMD)（Asynchronous Module Definition）。
 
