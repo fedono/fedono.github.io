@@ -4,7 +4,7 @@ title:  "RequireJS 知识点"
 author: "fedono"
 ---
 
-[中文文档](https://wenku.baidu.com/view/836bd9c8112de2bd960590c69ec3d5bbfd0adad2.html)
+[中文文档](https://wenku.baidu.com/view/836bd9c8112de2bd960590c69ec3d5bbfd0adad2.html) | [官方文档](https://requirejs.org/)
 
 ---
 
