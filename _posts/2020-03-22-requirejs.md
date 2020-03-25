@@ -4,7 +4,7 @@ title:  "RequireJS 知识点"
 author: "fedono"
 ---
 
-[中文文档](https://wenku.baidu.com/view/836bd9c8112de2bd960590c69ec3d5bbfd0adad2.html) | [官方文档](https://requirejs.org/) | [AMD 规范]([https://github.com/amdjs/amdjs-api/wiki/require-(%E4%B8%AD%E6%96%87%E7%89%88)](https://github.com/amdjs/amdjs-api/wiki/require-(中文版)) 
+[中文文档](https://wenku.baidu.com/view/836bd9c8112de2bd960590c69ec3d5bbfd0adad2.html) | [官方文档](https://requirejs.org/) | [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/require-(中文版)) 
 
 ---
 
@@ -55,7 +55,7 @@ author: "fedono"
 
   - 第一个参数是引入一个其他的`js` 文件，然后参数传入到第二个function中，可以直接使用
 
-    ```JS
+    ```js
     define(['./Base'], function (Base) {
         var m1 = new Base('This is the data for Page 1');
         return m1;
@@ -76,7 +76,7 @@ author: "fedono"
 
     使用define()定义模块时，依赖项中可以找到一个AMD模块：
 
-    ```
+    ```js
         define(function (require) {
             var a = require('a');
         });
