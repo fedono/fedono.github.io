@@ -4,7 +4,7 @@ title:  "RequireJS 知识点"
 author: "fedono"
 ---
 
-[中文文档](https://wenku.baidu.com/view/836bd9c8112de2bd960590c69ec3d5bbfd0adad2.html) | [官方文档](https://requirejs.org/)
+[中文文档](https://wenku.baidu.com/view/836bd9c8112de2bd960590c69ec3d5bbfd0adad2.html) | [官方文档](https://requirejs.org/) | [AMD 规范]([https://github.com/amdjs/amdjs-api/wiki/require-(%E4%B8%AD%E6%96%87%E7%89%88)](https://github.com/amdjs/amdjs-api/wiki/require-(中文版)) 
 
 ---
 
@@ -71,6 +71,18 @@ author: "fedono"
             
     });
     ```
+    
+  - 查看[官方文档](https://github.com/amdjs/amdjs-api/wiki/require-(中文版))的定义
+
+    使用define()定义模块时，依赖项中可以找到一个AMD模块：
+
+    ```
+        define(function (require) {
+            var a = require('a');
+        });
+    ```
+
+    工厂方法可以被解析成require('')的调用形式（例如，使用语法解析器或者使用Function.prototype.toString()或者正则表达式）去找到依赖，加载并且执行依赖，然后执行工厂方法内部代码，通过这样的方式，就可以获取到模块。
 
 - `main.js` 中所设置的脚本是异步加载的
 
