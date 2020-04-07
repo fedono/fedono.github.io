@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "JavaScript 基本类型知识点"
+title:  "JavaScript 基础类型知识点"
 author: "fedono"
 ---
 
-# JavaScript 基本类型知识点
+# JavaScript 基础类型知识点
 
 ## 为什么有的编程规范要求用 void 0 代替 undefined
 
