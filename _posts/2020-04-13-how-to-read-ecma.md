@@ -11,17 +11,18 @@ author: "fedono"
 
 <details>
     <summary>I could use some help...</summary>
-    <p>
 
-        ```c#
-        public class Order
-        {
-        public int OrderId { get; set; }
-        public int CustomerId { get; set; }
+    ```c#
+    public class Order
+    {
+    public int OrderId { get; set; }
+    public int CustomerId { get; set; }
 
-        public List<int> Products { get; set; }
-        }
-        ```
+    public List<int> Products { get; set; }
+    }
+    ```
 
-    </p>
+    - list 1
+    - list 2
+     > life should be change
 </details>
