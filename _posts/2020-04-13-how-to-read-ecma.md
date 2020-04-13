@@ -21,7 +21,7 @@ author: "fedono"
 
         public List<int> Products { get; set; }
         }
-        \```
+        ```
 
     </p>
 </details>
