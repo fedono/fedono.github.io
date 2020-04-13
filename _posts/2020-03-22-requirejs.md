@@ -4,7 +4,7 @@ title:  "RequireJS 知识点"
 author: "fedono"
 ---
 
-[中文文档](https://wenku.baidu.com/view/836bd9c8112de2bd960590c69ec3d5bbfd0adad2.html) | [官方文档](https://requirejs.org/) | [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/require-(中文版)) 
+[中文文档](https://wenku.baidu.com/view/836bd9c8112de2bd960590c69ec3d5bbfd0adad2.html) -|- [官方文档](https://requirejs.org/) -|- [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/require-(中文版)) -|- [动手实现一个AMD模块加载器](https://github.com/huruji/blog/issues/13)
 
 ---
 
@@ -62,16 +62,16 @@ author: "fedono"
     });
     ```
 
-  - 第一个就是一个 function，但是参数就是 `require` ，如果函数内不需要加载其他的`js` ，那么也不可以不穿 `require` 
+  - 第一个就是一个 function，但是参数就是 `require` ，如果函数内不需要加载其他的`js` ，那么也不可以不穿 `require`
 
     ```js
     define(function (require) {
         var $ = require('jquery'),
             lib = require('./lib'),
-            
+
     });
     ```
-    
+
   - 查看[官方文档](https://github.com/amdjs/amdjs-api/wiki/require-(中文版))的定义
 
     使用define()定义模块时，依赖项中可以找到一个AMD模块：
