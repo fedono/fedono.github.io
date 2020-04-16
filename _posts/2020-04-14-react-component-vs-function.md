@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "React 中 为什么推荐使用 function 胜于 component 呢"
+title:  "React 中 为什么推荐使用 function 胜于 component"
 author: "fedono"
 ---
 
