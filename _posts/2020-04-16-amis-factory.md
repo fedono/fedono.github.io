@@ -1,5 +1,7 @@
 ---
-
+layout: post
+title:  "AMIS 核心组织"
+author: "fedono"
 ---
 
 1. `HocStoreFactory` 究竟有什么用
