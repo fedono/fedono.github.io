@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "AMis 的验证逻辑”
+title: "AMis 的验证逻辑”
 author: "fedono"
 ---
 
-- 在 `formItem` 中的方法，也就是在配置 `formItem` 的时候，配置 `validate` 方法，这时候会在 `src/renderers/Form/Control.tsx` 中进行验证
+- 在 `formItem` 中的方法，也就是在配置 `formItem`  的 `schema` ，配置 `validate` 方法，这时候会在 `src/renderers/Form/Control.tsx` 中进行验证
 
   ```react
   const formItem = this.model as IFormItemStore;
@@ -40,6 +40,7 @@ author: "fedono"
         addHook(this.hook);
       }
   ```
+  
 - 直接使用 `validations` 配置已有的验证方式
 
   ```react
