@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "AMis 的亮点”
+title:  "AMis 的亮点"
 author: "fedono"
 ---
 

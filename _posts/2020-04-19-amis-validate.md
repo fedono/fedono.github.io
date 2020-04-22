@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AMis 的验证逻辑”
+title: "AMis 的验证逻辑"
 author: "fedono"
 ---
 
