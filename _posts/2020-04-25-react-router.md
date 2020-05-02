@@ -209,4 +209,8 @@ demo 查看[官方文档](https://github.com/ReactTraining/react-router/tree/mas
 另外就是 `createBrowserHistory` 和 `createHashHistory` 还可以在 浏览器中的 `history` 中有对应的概念，但是 `createMemoryHistory` 是什么意思？不在浏览器中建立，而是就是使用变量来存储路由吗，也就是所有的内存中存储路径
 
 - 拓展点就是，如何来写一个路由，现在看这几个库，都没有 使用到 监听 `hashchange` 这类相关的代码都没有，那么在哪会有呢，现在只能寄希望于 `history` 这个库能找得到了。
-- 结合 `history` 里面的 location ，和 amis  里的 normal location 看下，
+- 结合 `history` 里面的 location ，和 amis  里的 normal location 看下
+
+
+
+浏览器 history 以及 history 库的分析，参考 [history](./2020-04-26-history.md) 这篇文档
