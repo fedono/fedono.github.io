@@ -11,7 +11,7 @@ author: "fedono"
 
 - pageXOffset 是  `scrollX ` 的别名
 
-- scrollHeight 是包括滚动条的所有内容，没有滚动条时，scrollHeight值与元素 的 [clientHeight`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/clientHeight)相同。包括元素的padding，但不包括元素的border和margin。scrollHeight也包括 [`::before`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/::before) 和 [`::after`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/::after)这样的伪元素。
+- scrollHeight 是包括滚动条的所有内容，没有滚动条时，scrollHeight值与元素 的 [clientHeight](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/clientHeight)相同。包括元素的padding，但不包括元素的border和margin。scrollHeight也包括 [`::before`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/::before) 和 [`::after`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/::after)这样的伪元素。
 
   - 如果元素滚动到底，下面等式返回true，没有则返回false.
 
