@@ -9,3 +9,5 @@ author: "fedono"
 - [ECMAScript](http://dmitrysoshnikov.com/ecmascript/)
   - 看下里面的 in detail 系列，以及 The core 系列的文章
 
+- [读懂 ECMAScript 规格](https://es6.ruanyifeng.com/#docs/spec) 
+  - 阮一峰老师写的，还一直没有看
