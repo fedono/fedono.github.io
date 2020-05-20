@@ -139,3 +139,29 @@ console.log(Function.prototype.__proto__ === Object.prototype) // true
 - [对象](https://wangdoc.com/javascript/oop/object.html)
 
 - 结合[function](./2020-04-21-js-function.md) 和 [prototype](./2020-04-27-prototype.md) 一起看
+
+- [Javascript继承机制的设计思想](http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html) 
+
+  这篇需要好好读下，`prototype` 设计之初，就是为了数据共享，使用 `new fn()` 生成不同的实例，在 `fn` 内会有每个实例自己的参数，但是 `prototype` 就是多个实例的数据共享了
+
+- [Javascript面向对象编程（二）：构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html) 
+
+  我一直都没有明白在使用实例来实现继承的时候，下面几行代码的含义，在这篇文章中，终于看懂了，感谢阮一峰老师
+
+  ```js
+  var F = function(){};
+  F.prototype = Parent.prototype;
+  Child.prototype = new F();
+  
+  // 使用上述三行代码通常都是为了继承，也就是继承父类的 prototype，但是又需要在修改子类的 prototype 的时候，不要影响到父类，这时候通过创建一个中间函数，来实现修改子类的时候，不影响父类的属性改变
+  
+  function extend(Child, Parent) {
+    var F = function(){};
+  	F.prototype = Parent.prototype;
+  	Child.prototype = new F();
+  }
+  ```
+
+  
+
+  

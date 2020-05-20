@@ -939,3 +939,15 @@ new 运算接受一个构造器和一组调用参数，实际上做了几件事�
 
 - [JavaScript 的 this 原理](http://www.ruanyifeng.com/blog/2018/06/javascript-this.html)
 
+- [mdn new 运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/new) 
+
+  - 建一个空的简单JavaScript对象（即**{}** ）；
+  - 链接该对象（即设置该对象的构造函数）到另一个对象 ；
+  - 将步骤1新创建的对象作为**this**的上下文 ；
+  - 如果该函数没有返回对象，则返回**this**。
+
+- [类和实例的区别](https://segmentfault.com/q/1010000006839228) 
+
+  > 在 OOP 理论中，有类和实例两个很重要的概念，一个是抽象概念，一个是实体概念。`new` 运算符就是从抽象概念的定义中得到实体。
+  >
+  > JS 中没有类的概念，但是为了模拟类，允许将任意函数当作构建函数使用，通过 `new` 运算符来产生实例。所以可以 `new Func()` 来产生对象（实例）
