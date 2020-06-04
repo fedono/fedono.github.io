@@ -326,3 +326,10 @@ suspense 会在内部所有的组件都加载完成后，才会隐藏掉 fallbac
 
 ## Hooks
 
+
+
+
+
+## 参考
+
+- [React.createElement 和 ReactDOM.render 的简易实现](https://juejin.im/post/5e9b0a51e51d4546de47e6cb) 

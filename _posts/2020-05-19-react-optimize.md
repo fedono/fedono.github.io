@@ -6,11 +6,32 @@ author: "fedono"
 
 
 
-React 性能优化主要考虑的是两个点
+React 性能优化主要考虑的点
 
 - React 的优化方向：减少 render 的次数；减少重复计算。
+- 由于react中性能主要耗费在于update阶段的diff算法，因此性能优化也主要针对diff算法。
 - 如何去找到 React 中导致性能问题的方法，见 useCallback 部分。
 - 合理的拆分组件其实也是可以做性能优化的，你这么想，如果你整个页面只有一个大的组件，那么当 props 或者 state 变更之后，需要 reconction 的是整个组件，其实你只是变了一个文字，如果你进行了合理的组件拆分，你就可以控制更小粒度的更新。
+
+
+
+## 由于react中性能主要耗费在于update阶段的diff算法，因此性能优化也主要针对diff算法。
+
+## 1.减少diff算法触发次数
+
+减少diff算法触发次数实际上就是减少update流程的次数。
+正常进入update流程有三种方式：
+
+### 1.setState
+
+setState机制在正常运行时，由于批更新策略，已经降低了update过程的触发次数。
+因此，setState优化主要在于非批更新阶段中(timeout/Promise回调)，减少setState的触发次数。
+常见的业务场景即处理接口回调时，无论数据处理多么复杂，保证最后只调用一次setState。
+
+### 2.父组件render
+
+父组件的render必然会触发子组件进入update阶段（无论props是否更新）。此时最常用的优化方案即为shouldComponentUpdate方法。
+最常见的方式为进行this.props和this.state的浅比较来判断组件是否需要更新。或者直接使用PureComponent，原理一致。
 
 
 

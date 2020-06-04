@@ -1,3 +1,13 @@
+核心目标：扩大其*适用性*，包括动画，布局和手势。分为5个具体目标（后2个算送的）：
+
+- 把可中断的工作拆分成小任务
+- 对正在做的工作调整优先次序、重做、复用上次（做了一半的）成果
+- 在父子任务之间从容切换（yield back and forth），以支持React执行过程中的布局刷新
+- 支持`render()`返回多个元素
+- 更好地支持error boundary
+
+
+
 Scheduler 的整体流程概览
 
 调度过程中的各种全局变量一览
@@ -289,3 +299,12 @@ var animationTick = function(rafTime) {
 - 走完流程之后进行善后
 
 renderRoot 对每一个 fiber 进行更新，循环每个节点，更新每个节点，如果有错误，就捕获进行处理，也就是 didCatch ，
+
+## 参考文档
+
+- [探索 React 的内在 — Fiber & Algebraic Effects](https://mp.weixin.qq.com/s/7MQp1CrZFwNd4dQ3y2C-UA)
+
+- [React Fiber 架构学习](https://zhuanlan.zhihu.com/p/44942360)
+
+- [完全理解React Fiber](http://www.ayqy.net/blog/dive-into-react-fiber/)
+- [React16源码之React Fiber架构](https://github.com/HuJiaoHJ/blog/issues/7#)

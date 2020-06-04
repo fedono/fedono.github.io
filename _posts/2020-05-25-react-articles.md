@@ -1,65 +1,24 @@
-- 不推荐在 componentwillmount 里最获取数据的操作呢
+### `React.PureComponent`
 
-  - [关于React v16.3 新生命周期](https://juejin.im/post/5aca20c96fb9a028d700e1ce)
+`React.PureComponent` 与 [`React.Component`](https://zh-hans.reactjs.org/docs/react-api.html#reactcomponent) 很相似。两者的区别在于 [`React.Component`](https://zh-hans.reactjs.org/docs/react-api.html#reactcomponent) 并未实现 [`shouldComponentUpdate()`](https://zh-hans.reactjs.org/docs/react-component.html#shouldcomponentupdate)，而 `React.PureComponent` 中以浅层对比 prop 和 state 的方式来实现了该函数。
 
-    有一种错觉，在componentWillMount请求的数据在render就能拿到，但其实render在willMount之后几乎是马上就被调用，根本等不到数据回来，同样需要render一次“加载中”的空数据状态，所以在didMount去取数据几乎不会产生影响。
+如果赋予 React 组件相同的 props 和 state，`render()` 函数会渲染相同的内容，那么在某些情况下使用 `React.PureComponent` 可提高性能。
 
-  - [全面了解 React 新功能: Suspense 和 Hooks](https://segmentfault.com/a/1190000017483690)
+### `React.memo`
 
-    有了Fiber 之后， react 的渲染过程不再是一旦开始就不能终止的模式了， 而是划分成为了两个过程： 第一阶段和第二阶段， 也就是官网所谓的 `render phase` and `commit phase`。
+```
+const MyComponent = React.memo(function MyComponent(props) {
+  /* 使用 props 渲染 */
+});
+```
 
-    在 Render phase 中, React Fiber会找出需要更新哪些DOM，这个阶段是可以被打断的， 而到了第二阶段commit phase， 就一鼓作气把DOM更新完，绝不会被打断。
+`React.memo` 为[高阶组件](https://zh-hans.reactjs.org/docs/higher-order-components.html)。它与 [`React.PureComponent`](https://zh-hans.reactjs.org/docs/react-api.html#reactpurecomponent) 非常相似，但只适用于函数组件，而不适用 class 组件。
 
-    **两个阶段的分界点** 
+如果你的函数组件在给定相同 props 的情况下渲染相同的结果，那么你可以通过将其包装在 `React.memo` 中调用，以此通过记忆组件渲染结果的方式来提高组件的性能表现。这意味着在这种情况下，React 将跳过渲染组件的操作并直接复用最近一次渲染的结果。
 
-    这两个阶段， `分界点`是什么呢？
+`React.memo` 仅检查 props 变更。如果函数组件被 `React.memo` 包裹，且其实现中拥有 [`useState`](https://zh-hans.reactjs.org/docs/hooks-state.html) 或 [`useContext`](https://zh-hans.reactjs.org/docs/hooks-reference.html#usecontext) 的 Hook，当 context 发生变化时，它仍会重新渲染。
 
-    其实是 `render 函数`。 而且， `render 函数 也是属于 第一阶段 render phase 的`。
-
-    那这两个 phase 包含的的生命周期函数有哪些呢？
-
-    `render phase`:
-
-    - componentWillMount
-    - componentWillReceiveProps
-    - shouldComponentUpdate
-    - componentWillUpdate
-
-    `commit phase`:
-
-    - componentDidMount
-    - componentDidUpdate
-    - componentWillUnmount
-
-    综上也就是在 `componentWillMount` 中有可能被打断，导致后续需要重新进入，会进行多次的调用
-
-  
-
-- 在componentDidMount中添加加事件监听
-  
-  react只能保证componentDidMount-componentWillUnmount成对出现，componentWillMount可以被打断或调用多次，因此无法保证事件监听能在unmount的时候被成功卸载，可能会引起内存泄露
-  
-  pureComponent 好在哪？ 
-  
-- - 不应等是 pureComponent 里面会自动对比之前的 prevProps 和 nextProps 吗，然后再决定是否更新，但是在 [PureComponent的作用及一些使用陷阱](https://www.jianshu.com/p/33cda0dc316a) 中，说`shouldComponentUpdate` 会始终返回 `true` ，那还要 `PureComponent` 还有什么区别？
-
-
-
-- React 新旧生命周期的不同 
-
-  [关于React v16.3 新生命周期](https://juejin.im/post/5aca20c96fb9a028d700e1ce) 
-
-	> 旧的生命周期十分完整，基本可以捕捉到组件更新的每一个state/props/ref，没有什从逻辑上的毛病。
-	>
-	> 但是架不住官方自己搞事情，react打算在17版本推出新的Async Rendering，提出一种可被打断的生命周期，而可以被打断的阶段正是实际dom挂载之前的虚拟dom构建阶段，也就是要被去掉的三个生命周期。
-	>
-	> 生命周期一旦被打断，下次恢复的时候又会再跑一次之前的生命周期，因此componentWillMount，componentWillReceiveProps， componentWillUpdate都不能保证只在挂载/拿到props/状态变化的时候刷新一次了，所以这三个方法被标记为不安全。
-
-- `UNSAFE_componentWillMount`
-
-  为什么说此方法是服务端渲染唯一会调用的声明周期函数
-
-  [文档](https://zh-hans.reactjs.org/docs/react-component.html#unsafe_componentwillmount) 
+默认情况下其只会对复杂对象做浅层对比，如果你想要控制对比过程，那么请将自定义的比较函数通过第二个参数传入来实现。
 
 ## 参考
 
@@ -82,3 +41,19 @@
 - [【译】React 是如何区分 Class 和 Function 的 ?](https://zhuanlan.zhihu.com/p/51705609) 
 
 - [漫谈前端性能 突破 React 应用瓶颈](https://zhuanlan.zhihu.com/p/42032897) 
+
+- Hooks
+
+  - [Hooks FAQ](https://zh-hans.reactjs.org/docs/hooks-faq.html#how-to-memoize-calculations) 
+
+    - 关于 `Hooks` 需要知道的
+
+- [React Hooks的体系设计之一 - 分层](https://zhuanlan.zhihu.com/p/106665408)
+
+  - 其他三篇可以一起看一下
+
+- [你可能不需要使用派生 state](https://zh-hans.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization) 
+
+  - 官方的博客的质量真的很好
+
+- []
