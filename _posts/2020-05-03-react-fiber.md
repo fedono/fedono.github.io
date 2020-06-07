@@ -308,3 +308,4 @@ renderRoot 对每一个 fiber 进行更新，循环每个节点，更新每个�
 
 - [完全理解React Fiber](http://www.ayqy.net/blog/dive-into-react-fiber/)
 - [React16源码之React Fiber架构](https://github.com/HuJiaoHJ/blog/issues/7#)
+- [React系列——React Fiber 架构介绍资料汇总（翻译+中文资料）](https://segmentfault.com/a/1190000012834204) 
