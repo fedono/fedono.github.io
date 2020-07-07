@@ -17,19 +17,19 @@ webpack 开箱即用只支持 JS 和 JSON 两种文件类型，通过 Loaders �
 
 ### Plugin
 
-插件⽤用于 bundle 文件的优化，资源管理理和环境变量量注⼊入 作⽤用于整个构建过程
+插件⽤用于 bundle 文件的优化，资源管理和环境变量注入 作用于整个构建过程
 
 ## 文件监听
 
-⽂文件监听是在发现源码发⽣生变化时，⾃自动重新构建出新的输出⽂文件。
+文件监听是在发现源码发生变化时，⾃动重新构建出新的输出文件。
 
-webpack 开启监听模式，有两种⽅方式: ·启动 webpack 命令时，带上 --watch 参数 ·在配置 webpack.config.js 中设置 watch: true
+webpack 开启监听模式，有两种⽅式: ·启动 webpack 命令时，带上 --watch 参数 ·在配置 webpack.config.js 中设置 watch: true
 
-- 唯⼀一缺陷:每次需要⼿手动刷新浏览器器
+- 唯⼀一缺陷:每次需要手动刷新浏览器
 
 ### 文件监听的原理分析
 
-轮询判断⽂文件的最后编辑时间是否变化 某个⽂文件发⽣生了了变化，并不不会⽴立刻告诉监听者，⽽而是先缓存起来，等 aggregateTimeout
+轮询判断文件的最后编辑时间是否变化 某个文件发生了变化，并不会立刻告诉监听者，⽽是先缓存起来，等 aggregateTimeout
 
 ```js
 module.export = {
@@ -49,9 +49,9 @@ module.export = {
 
 ### webpack-dev-server
 
-- WDS 不不刷新浏览器器
+- WDS 不刷新浏览器器
 
-- WDS 不不输出⽂文件，⽽而是放在内存中
+- WDS 不输出文件，而是放在内存中
 - 使⽤用 HotModuleReplacementPlugin插件
 
 ```diff
@@ -67,7 +67,7 @@ module.export = {
 
 ### 使用 webpack-dev-middleware
 
-WDM 将 webpack 输出的⽂文件传输给服务器器 适⽤用于灵活的定制场景
+WDM 将 webpack 输出的⽂件传输给服务器 适用于灵活的定制场景
 
 ```js
 const express = require('express');
@@ -82,21 +82,25 @@ app.listen(3000, function () {
 });
 ```
 
-### 热更更新的原理分析
+### 热更新的原理分析
 
 1. Webpack Compile: 将 JS 编译成 Bundle
 
-2. HMR Server: 将热更更新的⽂文件输出给 HMR Rumtime
+2. HMR Server: 将热更新的文件输出给 HMR Rumtime
 
-3. Bundle server: 提供⽂文件在浏览器器的访问
+3. Bundle server: 提供⽂件在浏览器器的访问
 
-4. HMR Rumtime: 会被注⼊入到浏览器器， 更更新⽂文件的变化
+4. HMR Rumtime: 会被注入到浏览器器， 更新⽂文件的变化
 
 5. bundle.js: 构建输出的⽂文件
 
 ![image-20200601141734312](../assets/imgs/webpack-all/hot-module.png)
 
 ## webpack 打包库和组件
+
+> 这个通常会问打包静态文件和打包npm包的区别
+
+
 
 webpack 除了了可以用来打包应用，也可以⽤用来打包 js 库
 
@@ -109,7 +113,7 @@ webpack 除了了可以用来打包应用，也可以⽤用来打包 js 库
 
 library: 指定库的全局变量量
 
-libraryTarget: ⽀支持库引⼊的⽅式
+libraryTarget: ⽀持库引⼊的⽅式
 
 ```js
 module.exports = { 
@@ -149,7 +153,7 @@ module.exports = {
 };
 ```
 
-### 设置⼊入⼝口⽂文件
+### 设置⼊口文件
 
 ```js
 // package.json 的 main 字段为 index.js
@@ -188,9 +192,9 @@ plugins: [
 
 ## webpack ssr 打包存在的问题
 
-浏览器器的全局变量量 (Node.js 中没有 document, window) 
+浏览器的全局变量量 (Node.js 中没有 document, window) 
 
-- 组件适配:将不不兼容的组件根据打包环境进⾏行行适配
+- 组件适配:将不兼容的组件根据打包环境进行行适配
 
 - 请求适配:将 fetch 或者 ajax 发送请求的写法改成 isomorphic-fetch 或者 axios
 
@@ -292,6 +296,66 @@ plugins: [ function() {
   **思路**:将 react、react-dom、redux、react-redux 基础包和业务基础包打包成一个文件
 
   **方法**:使用 DLLPlugin 进行分包，DllReferencePlugin 对 manifest.json 引用
+
+
+
+## 整个打包的流程
+
+
+
+##内部原理是什么
+
+需要涉及到 tapable ，然后如何使用 loader 和 如何使用 plugin 需要说清楚
+
+`tapable` 是一个流程管理的库，设计到同步和异步的
+
+## 是否写过 loader 
+
+这个肯定要说有，但是写了什么，如何写一个 `loader` 
+
+参考 [inline-html-loader](https://github.com/cpselvis/inline-html-loader)
+
+```js
+const fs = require('fs');
+const path = require('path');
+
+const getContent = (matched, reg, resourcePath) => {
+    const result = matched.match(reg);
+    const relativePath = result && result[1];
+    const absolutePath = path.join(path.dirname(resourcePath), relativePath);
+    return fs.readFileSync(absolutePath, 'utf-8');
+};
+
+module.exports = function(content) {
+    const htmlReg = /<link.*?href=".*?\__inline">/gmi;
+    const jsReg = /<script.*?src=".*?\__inline".*?>.*?<\/script>/gmi;
+
+    content = content.replace(jsReg, matched => {
+        const jsContent = getContent(matched, /src="(.*)\?__inline/, this.resourcePath);
+        return `<script type="text/javascript">${jsContent}</script>`;
+    }).replace(htmlReg, matched => {
+        const htmlContent = getContent(matched, /href="(.*)\?__inline/, this.resourcePath);
+        return htmlContent;
+    });
+
+    return `module.exports = ${JSON.stringify(content)}`;
+}
+```
+
+看上面的代码，每一个`loader` 都会有一个 `content` 参数传入进来，这时候在使用`loader` 的匹配规则 `test` 时，匹配到相应的文件，这时候通过正则匹配到`content` 中的内容，然后通过每个 `loader` 都会获取到的全局变量`this.resourcePath` 配合正则获取到的 `path` 这时候就可以通过 `fs.readFileSync` 来获取内容了，这样就可以实现把通过 `link` 和 `script` 引入的文件的内容放到当前文件中，就实现了 `inline` 的效果。
+
+如何使用上面这个`loader` 呢
+
+```js
+{
+  test: /.html$/,
+  use: 'inline-html-loader'
+}
+```
+
+
+
+
 
 ## 参考
 

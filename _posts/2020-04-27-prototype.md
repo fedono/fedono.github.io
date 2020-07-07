@@ -24,5 +24,7 @@ console.log(["x=", x].join("")); // "x=test"
 
 
 
+## 参考
 
+- [详解prototype与__proto__](http://louiszhai.github.io/2015/12/17/prototype/) 
 

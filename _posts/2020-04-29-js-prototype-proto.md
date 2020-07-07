@@ -126,6 +126,111 @@ console.log(Function.prototype.__proto__ === Object.prototype) // true
 
 
 
+最后肯定是要放一张图的
+
+![img](../assets/imgs/prototype/prototype.jpg)
+
+
+
+上面这张图中，我没有明白底下的 `function Function()` 和`function Object()`为什么会有这种东西？ 
+
+> 应该是 JS  中内置的 Function 函数和 Object 函数
+
+
+
+好像终于把上面那张图看懂了，这张图的入口点有五个
+
+1. `let foo = new Foo()`  中 `foo` 的原型链
+
+   ```js
+   1. Foo.prototype
+   2. Object.prototype
+   3. null
+   ```
+
+2. `function Foo(){}` 的原型链
+
+   ```
+   1. Function.prototype
+   2. Object.prototype
+   3. null
+   ```
+
+3. `let obj = new Object()` 中 `obj` 的原型链
+
+   ```
+   1. Object.prototype
+   2. null
+   ```
+
+4. `JS` 内置函数 `function Object() ` 的原型链
+
+   >  为什么`Object` 是个函数，因为可以使用 `new Object() `  
+
+   ```
+   1. Function.prototype
+   2. Object.prototype
+   3. null
+   ```
+
+5. `JS` 内置函数 `function Function() ` 的原型链
+
+   ```
+   1. Function.prototype
+   2. Object.prototype
+   3. null
+   ```
+
+   
+
+```js
+function Foo() {}
+
+var obj = new Foo();
+// 写一下 Foo 和 obj 的原型链
+
+let proto = Object.getPrototypeOf(obj);
+let protoChain = [proto];
+while(proto) { // 原型链的顶端就是 null，
+  proto = Object.getProtypeOf(proto);
+  protoChain.push(proto);
+}
+
+console.log(protoChain) // 这样，就能够拿到 obj 的原型链了
+// 输出为 [ Foo {}, {}, null ]
+
+// 但是因为是原型链，所以其实在上述打印出来的数组中的第一个和第二个都应该为 Foo.prototype 和 Object.prototype，第三个就是 null 
+
+// Foo 的原型链使用上述方式输出为 [ [Function], {}, null ]
+// 但根据上面那张图，应该为 Function.prototype 和 Object.prototype ，然后再是 null
+```
+
+
+
+这三个概念还是没有搞懂 
+
+> 现在搞懂了
+
+- `getPrototypeOf` 
+  - 相当于 `__proto__` ，通过`__proto__` 来找原型链的时候，现在可以使用 `getPrototypeOf` 来找了，同时`Object`还有一个 `setPrototypeOf` 方法 
+
+- `isPrototypeOf` 
+
+  - `isPrototypeOf()` 方法用于测试一个对象是否存在于另一个对象的原型链上
+  - 有了上面的 `getProgotypeOf` ，这个`isPrototypeOf` 就很好理解了
+
+- `instanceof` 
+
+  > `isPrototypeOf()` 与 [`instanceof`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof) 运算符不同。在表达式 "`object instanceof AFunction`"中，`object` 的原型链是针对 `AFunction.prototype` 进行检查的，而不是针对 `AFunction` 本身。
+  >
+  > 也就是 `prototypeObj.isPrototypeOf(AObject)` 中，括号内针对的是`AObject` 本身 
+
+
+
+
+
+
+
 参考
 
 - [详解prototype与__proto__](http://louiszhai.github.io/2015/12/17/prototype/) 

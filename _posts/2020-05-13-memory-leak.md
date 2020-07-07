@@ -8,6 +8,8 @@
 
 ## 参考
 
+- [mdn-内存管理](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Memory_Management) 
+
 - [内存管理](http://js.pingan8787.com/)
 
   - JavaScript基础（高级） -> 内存管理
