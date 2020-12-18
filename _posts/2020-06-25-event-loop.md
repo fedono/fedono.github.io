@@ -142,6 +142,12 @@ promise2
 
 
 
+在浏览器环境中，常见的 macro task 有 setTimeout、MessageChannel、postMessage、setImmediate；常见的 micro task 有 MutationObsever 和 Promise.then。
+
+
+
+
+
 ## 参考
 
 - [深入理解js事件循环机制（浏览器篇）](http://lynnelv.github.io/js-event-loop-browser)
