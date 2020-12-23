@@ -23,3 +23,5 @@
 - [深入理解 Mobx Computed](https://luncher.github.io/2020/05/18/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-Mobx-Computed/)
 
   > 这个博客下面的 `mobx ` tag 下的几个 mobx 的文章还是挺好的，虽然不是讲源码，但是文章写的思路清晰，其他文章也可以看看
+
+- [Mobx真的好用吗？它有什么优缺点？主要适用于什么场景？](https://www.zhihu.com/question/328612405) 
