@@ -1,9 +1,21 @@
+react 相关问题
+
+参考 react-inter-v
+
+---
+
 - mobx 及相关技术栈
   - mst/mobx-react
 - redux 及相关技术栈
 - mobx 与 redux 的区别
 
+---
 
+各大 json-schema 的渲染引擎是如何做的，有什么优缺点
+
+编辑器又是如何做的，有什么优缺点
+
+formily 既然是引用的组件，那他的编辑器是如何做的，如何来做到可视化的
 
 ---
 
