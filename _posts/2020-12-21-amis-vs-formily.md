@@ -6,8 +6,36 @@ author: "fedono"
 
 - todo 
   - 各自的 formItem 都做了什么
-  - amis 中增加的hook，以及使用了 store来管理数据
+  - amis 中增加的hook，以及使用了 store 来管理数据
   - 针对递归渲染，他们的区别是什么 
+
+
+
+- 整个 formily 中，数据是如何处理的，没有 store，那么在 submit 的时候，是如何获取到数据然后提交的呢？
+
+- 在数据更新的时候，使用到了 setFieldState 来更新单个数据，这个又是如何才能通过路径对应到 formItem 中的呢？
+- formily 是如何与 rxjs 进行绑定的 
+
+- formily 中的 [性能优化实践](https://formilyjs.org/#/xbS7SW/yAtktNs3hx) 中提到了 formily 可以只更新单个 formItem，这个是如何来做到的
+  - 每个formItem 都会创建一个 model，然后里面会用 rxjs 来更新对应 formItem 的值，但是在 amis 中不是也是每个 formItem 都会创建一个 Model吗，为什么使用 rxjs 就能够更新对应的 formItem 的值而不让整个form渲染，但是在 amis 中就会整个form 都渲染呢？
+  - 是 rxjs 有做什么？还是两个系统的数据管理的方式会有这种问题的
+  - amis 解决数据量大的措施是使用可视区域内的才显示 formItem这样就会减少渲染多次
+
+
+
+
+
+
+
+
+
+---
+
+会哄女孩子开心
+
+那天在年终述职的时候，dh 说了我的语速很快的问题
+
+从我毕业那时候在卓望实习的时候面试人英网络的时候就有这个问题，一直到现在，本质上还是不会和人沟通和交流，如果能够和别人正常沟通和交流的话，那一定是正常的语速，而不是这种快速的语速
 
 
 
@@ -15,7 +43,7 @@ author: "fedono"
 
   - formily 主要的还是在处理 form 的数据提交，表单联动
 
-    - formily 集成了 next/antd 两个组件库，文档还是倾向于开发者能够快速的实现表单功能
+    - formily 集成了 next/antd/meet 两个组件库，文档还是倾向于开发者能够快速的实现表单功能
 
     - **数据联动**：有实现方式的差异，比如表单的联动，amis 都是完全通过在json 配置中来对其他的表单的显隐来做操作，formily 需要使用 observer/subscribe 来操作对应组件数据的
 
