@@ -49,5 +49,5 @@ author: "fedono"
 
 - [从web-vitals到PerformanceObserver](https://juejin.im/post/6844904158076600334) 
 - [First_paint](https://developer.mozilla.org/zh-CN/docs/Glossary/First_paint)
-
 - [从 8 道面试题看浏览器渲染过程与性能优化](https://juejin.im/post/6844904040346681358)
+- [MDN - Web Performance](https://developer.mozilla.org/en-US/docs/Web/Performance) 

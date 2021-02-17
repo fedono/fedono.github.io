@@ -11,3 +11,4 @@ author: "fedono"
 
 - [读懂 ECMAScript 规格](https://es6.ruanyifeng.com/#docs/spec) 
   - 阮一峰老师写的，还一直没有看
+

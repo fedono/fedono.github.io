@@ -4,6 +4,13 @@ title:  "RequireJS 知识点"
 author: "fedono"
 ---
 
+> 之前一直没有搞懂别人问 AMD 和 CMD的区别是什么？其实AMD 和 CMD都是一种规范，requireJS和 SeaJS是这两种规范的一个实现。UMD 是这两种规范的一个融合
+>
+> - 对于依赖的模块AMD是提前执行，CMD是延迟执行。
+> - AMD推崇依赖前置，CMD推崇依赖就近。
+
+
+
 [中文文档](https://wenku.baidu.com/view/836bd9c8112de2bd960590c69ec3d5bbfd0adad2.html) -|- [官方文档](https://requirejs.org/) -|- [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/require-(中文版)) -|- [动手实现一个AMD模块加载器](https://github.com/huruji/blog/issues/13)
 
 ---
@@ -106,4 +113,35 @@ author: "fedono"
 
   ![image-20200322134200072](../assets/imgs/requirejs/mechanism.png)
 
+## UMD
+
+UMD是AMD和CommonJS的糅合
+
+AMD模块以浏览器第一的原则发展，异步加载模块。
+CommonJS模块以服务器第一原则发展，选择同步加载，它的模块无需包装(unwrapped modules)。
+这迫使人们又想出另一个更通用的模式UMD （Universal Module Definition）。希望解决跨平台的解决方案。
+
+UMD先判断是否支持Node.js的模块（exports）是否存在，存在则使用Node.js模块模式。
+在判断是否支持AMD（define是否存在），存在则使用AMD方式加载模块。
+
+```JS
+(function (window, factory) {
+    if (typeof exports === 'object') {
+     
+        module.exports = factory();
+    } else if (typeof define === 'function' && define.amd) {
+     
+        define(factory);
+    } else {
+     
+        window.eventUtil = factory();
+    }
+})(this, function () {
+    //module ...
+});
+```
+
+## 参考
+
+- [[AMD, CMD, CommonJS和UMD](https://segmentfault.com/a/1190000004873947)](https://segmentfault.com/a/1190000004873947)
 

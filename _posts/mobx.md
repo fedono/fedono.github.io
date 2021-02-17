@@ -78,7 +78,8 @@ export const ShopStore = types
 
 这里的 `dependency injection/ change recording` 又是在代码中如何体现的。
 
-
+- dependency injection 为在建立 store 的时候，第三个参数为建立全局的参数可以在全局引用
+  - 参考 [官方文档 - Dependency Injection](https://mobx-state-tree.js.org/concepts/dependency-injection)
 
 
 

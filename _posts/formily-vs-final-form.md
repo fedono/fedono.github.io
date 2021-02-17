@@ -148,5 +148,81 @@
 
 effects 是使用的 rxjs的效果，这样他才能够使用 subscribe 的效果，那是如何做到能够匹配到 form.path 的效果呢？
 
-那 actions 呢？通过 createActions 吗？
+·那 actions 呢？通过 createActions 吗？
+
+在 `packages/react/src/shared.ts:29` 中设定了整个的 `createFormActions` ，然后在effects 中可以如下使用
+
+```js
+// 在 form 外 
+const actions = createFormActions();
+// 在 form 的 effects 中
+actions.setFieldState("mobile", state => {
+  state.visible = false;
+});
+```
+
+很奇怪的是，在 `createFormActions` 中只是调用了`react-eva` 的 `creactActions` ，然后将`setFieldState` 这些字符串传入，到 `createActions` 中只是将这些参数放到对象`actions = {}`中，并没有与什么进行绑定啊，为什么这些`setFieldState` 就可以通过类似`mobile` 这些在 `form` 中的路径参数进行获取到对应的 `field` 呢，而且获取到还可以设置对应的数据呢？
+
+## 理清 Effects
+
+如
+
+```js
+// 使用案例
+const { onFieldValueChange$ } = FormEffectHooks
+
+effects={() => {
+  const { setFieldState } = createFormActions()
+
+  onFieldValueChange$('aa').subscribe(({ value }) => {
+    setFieldState('*(bb,cc,dd)', state => {
+      state.visible = value
+    })
+  })
+}}
+
+// 解析
+// 1. onFieldValueChange$  packages/react/src/shared.ts:340
+onFieldValueChange$: createEffectHook<IFieldState>(
+    LifeCycleTypes.ON_FIELD_VALUE_CHANGE
+  )
+// 2 packages/react/src/shared.ts:249
+export const createEffectHook = <TResult, Props extends Array<any> = any[]>(
+  type: string
+) => (...args: Props): Observable<TResult> => {
+  return env.effectSelector(type, ...args)
+}
+
+// 3 . effectSelector packages/react/src/shared.ts:202
+env.effectSelector = <T = any>(
+  type: string,
+  matcher?: string | ((payload: T) => boolean)
+) => {
+  const observable$: Observable<T> = selector(type)
+  return observable$
+}
+
+// 4. effectSelector 在 createFormEffects 中赋值，所以需要找到 createFormEffects什么时候会被调用
+const { dispatch } = useEva({
+   effects: createFormEffects(effects, form)
+})
+
+// 5. 看 react-eva 中给 effects 传入了什么（因为 createFormEffects 是个 curry 函数，传入了 selector）
+const subscription = () => {
+    if (isFn(effects)) {
+      // effects 里的这个参数是一个函数，也就是 selector 
+      effects((type, $filter) => {
+        if (!subscribes[type]) {
+          subscribes[type] = new Subject()
+        }
+        if (isFn($filter)) {
+          return subscribes[type].pipe(filter($filter))
+        }
+        return subscribes[type]
+      })
+    }
+  }
+```
+
+
 

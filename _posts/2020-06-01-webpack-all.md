@@ -1,3 +1,22 @@
+---
+layout: post 
+title: "Webpack 原理与相关概念" 
+author: "fedono"
+---
+
+## 前提
+
+首先要明白为什么需要 webpack 
+
+1. 在前端的性能优化中，需要将JS和CSS进行打包压缩，减少HTTP中的请求数和请求文件的大小
+2. webpack 能够对非CSS文件如 postCSS/less/sass/typescript 这些进行配置就能够转换成CSS/JS文件了，减少了开发者自己调用Node-SASS 包来进行解析的工作
+   1. 包括 入口和上下文/输出/模块/插件/外部拓展externals/构建目标targets 这些都属于这部分的
+3. webpack提供的拓展功能很多
+   1. 提供了 dev-server 功能，能够在本地启动服务，直接能够查看编译后的文件
+   2. 提供了本地修改文件后即时刷新后查看修改效果
+   3. 提供了souceMap 的调试功能
+   4. ... 
+
 ##  webpack 的流程是怎样的
 
 ## 参考
@@ -58,12 +77,12 @@ module.export = {
 
 ```diff
 {
-"name": "hello-webpack", "version": "1.0.0", "description": "Hello webpack", "main": "index.js",
-"scripts": {
-"build": "webpack ",
-+ ”dev": "webpack-dev-server --open"
-},
-"keywords": [], "author": "", "license": "ISC"
+  "name": "hello-webpack", "version": "1.0.0", "description": "Hello webpack", "main": "index.js",
+  "scripts": {
+    "build": "webpack ",
++   ”dev": "webpack-dev-server --open"
+  },
+  "keywords": [], "author": "", "license": "ISC"
 }
 ```
 
@@ -74,7 +93,7 @@ WDM 将 webpack 输出的⽂件传输给服务器 适用于灵活的定制场景
 ```js
 const express = require('express');
 const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev- middleware');
+const webpackDevMiddleware = require('webpack-dev-middleware');
 const app = express();
 const config = require('./webpack.config.js'); 
 const compiler = webpack(config);
@@ -92,15 +111,28 @@ app.listen(3000, function () {
 
 3. Bundle server: 提供⽂件在浏览器器的访问
 
-4. HMR Rumtime: 会被注入到浏览器器， 更新⽂文件的变化
+4. HMR Rumtime: 会被注入到浏览器器， 更新⽂件的变化
 
-5. bundle.js: 构建输出的⽂文件
+5. bundle.js: 构建输出的文件
 
 ![image-20200601141734312](../assets/imgs/webpack-all/hot-module.png)
 
 ## webpack 打包库和组件
 
 > 这个通常会问打包静态文件和打包npm包的区别
+>
+> 静态文件和打包 npm包的重点不同
+>
+> **静态文件**
+>
+> - 侧重文件的类型处理，如less转换成 css，typescript 转成 JS
+> - 测试
+>
+> **npm包**
+>
+> - 文件的调用方法（需要设置Library/libraryTarget
+> - 文件的压缩与非压缩版本
+> - 文件在正式与非正式环境的入口
 
 
 
@@ -113,7 +145,7 @@ webpack 除了了可以用来打包应用，也可以⽤用来打包 js 库
 
 ### 如何将库暴露出去
 
-library: 指定库的全局变量量
+library: 指定库的名称
 
 libraryTarget: ⽀持库引⼊的⽅式
 
@@ -201,7 +233,7 @@ plugins: [
 
 - 请求适配:将 fetch 或者 ajax 发送请求的写法改成 isomorphic-fetch 或者 axios
 
-样式问题 (Node.js ⽆无法解析 css) 
+样式问题 (Node.js ⽆法解析 css) 
 
 - 方案一:服务端打包通过 ignore-loader 忽略略掉 CSS 的解析
 
@@ -237,7 +269,7 @@ plugins: [ function() {
 
 - 缓存，提升二次构建速度
   
-- 使用 cache-loader 来缓存
+  - 使用 cache-loader 来缓存
   
 - 多进程/多实例，使用 `thread-loader` 多线程 `loader` 来加快打包过程
 
@@ -290,10 +322,6 @@ plugins: [ function() {
 
   将 react、react-dom 基础包通过 cdn 引入，不打入 bundle 中
 
-  ```js
-   
-  ```
-
 - 进一步分包:预编译资源模块
 
   **思路**:将 react、react-dom、redux、react-redux 基础包和业务基础包打包成一个文件
@@ -307,9 +335,14 @@ plugins: [ function() {
 1. 调用`webpack`函数接收`config`配置信息，并初始化`compiler`，在此期间会`apply`所有 webpack 内置的插件;
 
 2. 调用`compiler.run`进入模块编译阶段；
+
 3. 每一次新的编译都会实例化一个`compilation`对象，记录本次编译的基本信息；
 
-4.  进入`make`阶段，即触发`compilation.hooks.make`钩子，从`entry`为入口： a. 调用合适的`loader`对模块源码预处理，转换为标准的JS模块； b. 调用第三方插件`acorn`对标准JS模块进行分析，收集模块依赖项。同时也会继续递归每个依赖项，收集依赖项的依赖项信息，不断递归下去；最终会得到一颗依赖树；
+4. 进入`make`阶段，即触发`compilation.hooks.make`钩子，从`entry`为入口：
+
+    a. 调用合适的`loader`对模块源码预处理，转换为标准的JS模块； 
+
+   b. 调用第三方插件`acorn`对标准JS模块进行分析，收集模块依赖项。同时也会继续递归每个依赖项，收集依赖项的依赖项信息，不断递归下去；最终会得到一颗依赖树；
 
 5. 最后调用`compilation.seal` render 模块，整合各个依赖项，最后输出一个或多个chunk；
 
@@ -397,10 +430,15 @@ module.exports = function(content) {
 
 - output 中的 path 和 publicPath 的区别是什么
 
+  path： 一个绝对路径，代表打包在本地磁盘上的物理位置
 
+  publicPath： 打包出来的资源的 URL 前缀（虽然名为打包，但是这个配置项在生产模式和开发模式中都很重要，因为开发模式就是打包在内存中），即在浏览器中访问的路径的前缀。可以填写相对路径或者绝对路径：
+
+  >  参考[Webpack 中 path/publicPath/contentBase 的关系](https://github.com/fi3ework/blog/issues/39)
 
 ## 参考
 
 - [react-webpack](https://github.com/JinJieTan/react-webpack) 
 
   React移动端项目，手动配置的脚手架，完美性能优化的极致追求
+
