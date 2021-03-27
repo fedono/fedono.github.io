@@ -4,6 +4,8 @@ title: "通常的CSS面试题"
 author: "fedono"
 ---
 
+> 感觉这种还是放到 [fe-questions](https://github.com/fedono/fe-questions/issues/2) 中把，这个博客还是主要放一些知识点的总结，fe-questions 那里放一些题目以及解答
+
 ## 垂直居中
 
 垂直居中的方法，如果全写出来，有10多种。面试的时候一般都会说比较常用的几种。`flex`、`position + transform`、`position + 负margin`是最常见的三种情况。
@@ -57,7 +59,7 @@ author: "fedono"
 
   
 
-## 清楚浮动
+## 清除浮动
 
 - BFC 
 - clear: both 
@@ -127,7 +129,8 @@ author: "fedono"
   }
   ```
 
-  
+
+
 
 ## 参考
 

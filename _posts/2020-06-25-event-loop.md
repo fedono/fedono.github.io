@@ -1,6 +1,6 @@
 ---
 layout: post 
-title: "Event Loop" 
+title: "JS 的事件循环（Event Loop）" 
 author: "fedono"
 ---
 

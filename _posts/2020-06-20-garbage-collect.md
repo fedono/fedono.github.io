@@ -1,4 +1,226 @@
-## 引用
+---
+layout: post 
+title: "内存泄漏与垃圾回收" 
+author: "fedono"
+---
+
+内存泄漏通常和垃圾回收是放在一起的，没有回收的内存，也就是垃圾回收没有回收到，就导致内存泄漏了。
+
+## 内存处理
+
+### 内存的生命周期
+
+- 内存分配：声明变量、函数、对象的时候，JS 会自动分配内存
+
+  ```js
+  cosnt n = 123; // 给数值变量分配内存
+  const s = 'jack'; // 给字符串分配内存
+  
+  const o = {
+    a: 1, 
+    b: null
+  }; // 给对象及包含的值分配内存
+  ```
+
+- 内存使用：即读写内存，也就是使用变量、函数等
+
+  使用值的过程实际上是对分配内存进行读取与写入的操作。读取与写入可能是写入一个变量或者一个对象的属性值，甚至传递函数的参数。
+
+  ```js
+  var a = 10; // 分配内存
+  console.log(a); // 对内存的使用
+  ```
+
+- 内存回收：使用完毕，由垃圾回收机制自动回收不再使用的内存
+
+  垃圾回收算法主要依赖于引用的概念。
+
+  在内存管理的环境中，一个对象如果有访问另一个对象的权限（隐式或者显式），叫做一个对象引用另一个对象。
+
+  例如，一个 JavaScript 对象具有对它原型的引用（隐式引用）和对它属性的引用（显式引用）。
+
+  在这里，“对象”的概念不仅特指 JavaScript 对象，还包括函数作用域（或者全局词法作用域）
+
+  
+
+  **1. 引用计数垃圾回收**
+
+  引用计数算法定义“内存不再使用”的标准很简单，就是看一个对象是否有指向它的引用。如果没有其他对象指向它了，就说明对象已经不再需要了。
+
+  但它存在一个致命的问题：循环引用。
+
+  如果两个对象相互引用，尽管它们已经不再使用，垃圾回收不会进行回收，导致内存泄漏。
+
+  
+
+  **2. 标记清除算法**
+
+  标记清楚算法将“不再使用的对象”定义为“无法达到的对象”。简单来说，就是从根部（在JS中就是全局对象）出发定时扫描内存中的对象。凡是能从根部到达的对象，都是还需要使用的。
+
+  那些无法由根部出发触及到的对象被标记为不再使用，稍后进行回收。
+
+  - 垃圾收集器在运行的释藏会给存储在内存中的所有变量加上标记
+  - 从根部出发将能触及到的对象标记清除
+  - 那些还存在标记的变量被视为准备删除的变量
+  - 最后垃圾收集器会执行最后一步内存清除的工作，销毁那些带标记的值并回收它们所占用的内存空间
+
+  
+
+### 有哪些常见的内存泄漏
+
+- 全局变量
+
+  ```js
+  function foo() {
+    bar1 = 'some text'; // 没有声明变量，实际上是全局变量 => window.bar1
+    
+    this.bar2 = 'some text 2'; // 全局变量 => window.bar2
+  }
+  
+  foo()
+  ```
+
+- 未被清除的定时器和回调
+
+  如果后续 renderer 元素被移除，整个定时器实际上没有任何作用。但如果你没有回收定时器，整个定时器依然有效，不但定时器无法被内存回收，定时器函数中的依赖也无法回收。在这里案例中的 sercerData 也无法被回收
+
+  ```js
+  var serverData = loadData();
+  
+  setInterval(function() {
+    var renderer = document.documentElementById('renderer');
+    
+    if (renderer) {
+      renderer.innerHTML = JSON.stringify(serverData);
+    }
+  }, 5000);
+  ```
+
+- 闭包
+
+  在 JS 开发中，我们经常会使用到闭包，一个内部函数，有权访问包含其的外部函数中的变量，下面这种情况，闭包也会造成内存泄漏。
+  
+  ```js
+var theThing = null;
+  
+  var replaceThing = function() {
+    var originalThing = theThing;
+    var unused = function() {
+      if (originalThing) { // 对于 originalThing 的引用
+        console.log("hi"); 
+      }
+    };
+    
+    theThing = {
+      longStr: new Array(1000000).join('*'),
+      someMethod: function() {
+        console.log('message');
+      }
+    }
+  }
+  
+  setInterval(replaceThink, 1000);
+  ```
+  
+  这段代码，每次调用 replaceThing 时，theThing 获得了包含一个巨大的数组和一个对于新闭包 someMethod 的对象。同时 unused 是一个引用了 originalThing 的闭包
+  
+  这个范例的关键在于，闭包之间是共享作用域的，尽管 unused 可能一直没有被调用，但是 someMethod 可能会被调用，就会导致无法对其内存进行回收。当这段代码被反复执行时，内存会持续增长。
+  
+- DOM 引用
+
+  很多时候，我们对 DOM 的操作，会把 DOM 的引用保存在一个数组或者 Map 中
+
+  ```js
+  var elements = {
+    imgage: document.getElementById('image')
+  };
+  
+  function doStuff() {
+    elements.image.src = 'http://example.com/image_name.png';
+  }
+  
+  function removeImage() {
+    document.body.removeChild(document.getElementById('image'));
+    // 这个时候我们对于 #image 仍然有一个引用， Image 元素，仍然无法被内存回收
+  }
+  ```
+
+  上述案例中，即使我们对于 image 元素进行了移除，但是仍然有对 image 元素的引用，依然无法对其进行内存回收。
+
+  所以需要在 removeImage() 函数内设置
+
+  ```js
+  elements.image = null; 
+  ```
+
+### 如何避免内存泄漏
+
+- 减少不必要的全局变量，使用严格模式避免意外创建全局变量
+- 在你使用完数据后，及时解除引用（闭包中的变量，DOM 引用，定时器清除）
+- 组织好你的逻辑，避免死循环等造成浏览器卡顿，崩溃的问题
+
+
+
+**拓展 **
+
+1. 既然对内存这么了解，那么来实现一个函数，用来获取传入的对象所占的Bytes数值
+
+> 前置知识：一个 number 占据 8个 Byte，一个Boolean 占据4个Byte，一个String 占据2个Byte
+
+```js
+var sizeof = sizeof || {};
+sizeof.sizeof = function(object, pretty) {
+    var objectList = [];
+    var stack = [object];
+    var bytes = 0;
+
+    while (stack.length) {
+        var value = stack.pop();
+
+        if(typeof value === 'boolean'){
+            bytes += 4;
+        }
+      	else if(typeof value === 'string'){
+            bytes += value.length * 2;
+        }
+      	else if(typeof value === 'number'){
+            bytes += 8;
+        }
+      	// 在对象中，如果 value 指向同一个对象，则只计算一次，所以使用 objectList 来判断
+      	else if(typeof value === 'object' && objectList.indexOf( value ) === -1){
+          	// objectList 来存储对象
+            objectList.push(value);
+          	
+          	// 在对象中，所有的 key 都是字符串，所以 key 需要单独计算
+            // if the object is not an array, add the sizes of the keys
+            if (Object.prototype.toString.call(value) != '[object Array]'){
+                for(var key in value) {
+                  bytes += 2 * key.length;
+                }
+            }
+            for(var key in value) stack.push(value[key]);
+        }
+    }
+    return pretty ? sizeof.format(bytes) : bytes;
+}
+sizeof.format = function(bytes){
+    if(bytes < 1024) return bytes + "B";
+    else if(bytes < 1048576) return(bytes / 1024).toFixed(3) + "K";
+    else if(bytes < 1073741824) return(bytes / 1048576).toFixed(3) + "M";
+    else return(bytes / 1073741824).toFixed(3) + "G";
+}
+exports = module.exports = sizeof;
+```
+
+来源 [sizeof](https://github.com/lyroyce/sizeof/blob/master/lib/sizeof.js) 库
+
+2. 如何来使用 weakMap/weakSet 来达到节省内存的效果
+
+
+
+
+
+## 垃圾回收
 
 垃圾回收算法主要依赖于引用的概念。在内存管理的环境中，一个对象如果有访问另一个对象的权限（隐式或者显式），叫做一个对象引用另一个对象。例如，一个Javascript对象具有对它[原型](https://developer.mozilla.org/en/JavaScript/Guide/Inheritance_and_the_prototype_chain)的引用（隐式引用）和对它属性的引用（显式引用）。
 
@@ -16,7 +238,7 @@
 
 
 
-## 引用计数
+### 引用计数
 
 这是最初级的垃圾收集算法。此算法把“对象是否不再需要”简化定义为“对象有没有其他对象引用到它”。如果没有引用指向该对象（零引用），对象将被垃圾回收机制回收。
 
@@ -26,7 +248,7 @@
 
 
 
-## 标记-清除
+### 标记-清除
 
 这个算法把“对象是否不再需要”简化定义为“对象是否可以获得”。
 
@@ -224,3 +446,36 @@ reader.pipe(writer);
 - [垃圾回收](https://zh.javascript.info/garbage-collection) 
 - 《深入浅出Node.js》 第五章-内存控制。
 
+- [mdn-内存管理](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Memory_Management) 
+
+- [内存管理](http://js.pingan8787.com/)
+
+  - JavaScript基础（高级） -> 内存管理
+
+- [JavaScript 内存泄漏教程](http://www.ruanyifeng.com/blog/2017/04/memory-leak.html)
+
+- [尾调用优化](http://www.ruanyifeng.com/blog/2015/04/tail-call.html)
+
+  尾调用由于是函数的最后一步操作，所以不需要保留外层函数的调用记录，因为调用位置、内部变量等信息都不会再用到了，只要直接用内层函数的调用记录，取代外层函数的调用记录就可以了。
+
+  > ```javascript
+  > function f() {
+  > let m = 1;
+  > let n = 2;
+  > return g(m + n);
+  > }
+  > f();
+  > 
+  > // 等同于
+  > function f() {
+  > return g(3);
+  > }
+  > f();
+  > 
+  > // 等同于
+  > g(3);
+  > ```
+
+  上面代码中，如果函数g不是尾调用，函数f就需要保存内部变量m和n的值、g的调用位置等信息。但由于调用g之后，函数f就结束了，所以执行到最后一步，完全可以删除 f() 的调用记录，只保留 g(3) 的调用记录。
+
+  这就叫做"尾调用优化"（Tail call optimization），即只保留内层函数的调用记录。如果所有函数都是尾调用，那么完全可以做到每次执行时，调用记录只有一项，这将大大节省内存。这就是"尾调用优化"的意义。

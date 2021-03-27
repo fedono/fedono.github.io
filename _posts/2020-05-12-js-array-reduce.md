@@ -1,3 +1,11 @@
+---
+layout: post 
+title: "详解 JS 的 reduce" 
+author: "fedono"
+---
+
+
+
 终于明白了，或者说是懂了 JS 中 `array` 中的 `reduce` 了，以前好像是一直没有懂，或者说是似懂非懂，`reduce` 要的就是返回函数中的第一个参数
 
 ```js

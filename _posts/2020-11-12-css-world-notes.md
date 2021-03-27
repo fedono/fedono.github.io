@@ -1,3 +1,11 @@
+---
+layout: post
+ title: "CSS 世界笔记" 
+author: "fedono"
+---
+
+
+
 - ·`img` 元素在有`src` 属性时，设置`::before/::after` 是无效的，所以可以利用该特性来设置在图片没有加载时显示问题如`content:attr(alt)` ，一旦`src` 属性有值后，就不再显示了。
 - `<span>`元素默认是 inline 水平，但是一 旦设置 `position:absolute`，其 `display` 计算值就变成了 `block` 
 
