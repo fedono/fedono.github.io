@@ -30,8 +30,8 @@ export default () => {
     const [theme, setTheme] = useState(themes.light);
     return <ThemeContext.Provider value={{
         theme,
+        // 为什么这里有两个 setTheme，第二个是 useState 里的，那第一个呢？
         toggle: () => {
-            // 为什么这里有两个 setTheme，第二个是 useState 里的，那第一个呢？
             setTheme(theme => {
                 setTheme(theme === themes.light ? themes.dark : themes.light)
             });
