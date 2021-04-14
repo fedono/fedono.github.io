@@ -359,6 +359,13 @@ plugins: [ function() {
 
 这个肯定要说有，但是写了什么，如何写一个 `loader` 
 
+可以使用 loader-runner 来调试 loader，这时候就可以不
+
+问题
+
+- 如何来写一个异步的 loader
+- 如何拿到webpack对于当前loader 的配置
+
 参考 [inline-html-loader](https://github.com/cpselvis/inline-html-loader)
 
 ```js

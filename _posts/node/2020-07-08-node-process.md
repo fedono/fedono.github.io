@@ -49,7 +49,7 @@ for (let i = 0; i < cpus.length; i++) {
 
 下图为著名的`Master-Worker` 模式，又称主从模式。图中的进程分为两种：主进程和工作进程。这是典型的分布式架构中用于并行处理业务的模式，具备较好的可伸缩性和稳定性。主进程不负责具体的业务处理，而是负责调度或管理工作进程，它是趋于稳定的。工作进程负责具体的业务处理，因为业务的多种多样，其中一项业务由多人开发完成，所以工作进程的稳定性值得开发者关注。
 
-![Master-worker](../assets/imgs/process/Master-Worker.png)
+![Master-worker](../../assets/imgs/process/Master-Worker.png)
 
 > 通过 fork() 复制的进程都是一个独立的进程，这个进程中有着独立而全新的 V8 实例。它需要至少 30毫秒的启动时间和至少10MB的内存。尽管Node 提供了 fork() 供我们复制进程使每个 CPU内核都使用上，但是依然要切记 fork() 进程使昂贵的。好在 Node 通过事件驱动的方式在单线程上解决了大并发的问题，这里启动多个进程只是为了充分将 CPU 资源利用起来，而不是为了解决并发问题。
 
@@ -78,7 +78,7 @@ cp.fork('./worker.js');
 
 以上四个方法在创建子进程之后均会返回子进程对象。他们的差别如下
 
-![diff-of-method](../assets/imgs/process/diff-of-method.png) 
+![diff-of-method](../../assets/imgs/process/diff-of-method.png) 
 
 这里的可执行文件是指可以直接执行的文件，如果是`JavaScript` 文件通过`execFile()` 运行，它的首行内容必须添加如下代码
 
@@ -153,11 +153,11 @@ IPC 的全称是`Inter-Process Communication` ，即进程间通信。进程间�
 
 下图为IPC 创建和实现的示意图
 
-![](../assets/imgs/process/create-ipc.png)
+![](../../assets/imgs/process/create-ipc.png)
 
 父进程在实际创建子进程之前，会创建IPC通道并监听它，然后才真正创建出子进程，并通过环境变量(NODE_CHANNEL_FD) 告诉子进程这个IPC通道的文件描述符。子进程在启动的过程中，根据文件描述符去连接这个已存在的 IPC通道，从而完成父子进程之间的连接。下图为创建IPC管道的步骤示意图。
 
-![](../assets/imgs/process/create-ipc-step.png)
+![](../../assets/imgs/process/create-ipc-step.png)
 
 
 
@@ -171,7 +171,7 @@ IPC 的全称是`Inter-Process Communication` ，即进程间通信。进程间�
 
 多个进程不能监听一个端口，要解决这个问题，通常的做法是让每个进程监听不同的端口，其中主进程监听主端口（如80），主进程对外接收所有的网络请求，再将这些请求分别代理到不同的端口的进程上。示意图如下
 
-![](../assets/imgs/process/process-multiple-port.png) 
+![](../../assets/imgs/process/process-multiple-port.png) 
 
 通过代理，可以避免端口不能重复监听的问题，甚至可以在代理进程上做适当的负载均衡，使得每个子进程可以较为均衡地执行任务。由于进程每接收到一个连接，将会用掉一个文件描述符，因此代理方案中客户端连接到代理进程，代理进程连接到工作进程的过程需要用掉两个文件描述符。操作系统的文件描述符是有限的，代理方案浪费掉一倍数量的文件描述符的做法影响了系统的扩展能力。
 
@@ -298,11 +298,11 @@ process.on('message', function(m, tcp) {
 
 这样一来，所有的请求都是由子进程来处理了。整个过程中，服务的过程发生了一次改变
 
-![](../assets/imgs/process/master-slave-1.png)
+![](../../assets/imgs/process/master-slave-1.png)
 
 主进程发送完句柄并关闭监听之后，成为了如下图的结构
 
-![](../assets/imgs/process/master-slave-2.png)
+![](../../assets/imgs/process/master-slave-2.png)
 
 这样，通过代理，多个子进程就可以同时监听相同的端口，再也没有不通过代理，同时开始多个子进程监听相同端口出现的 `EADDRINUSE` 异常发生了。
 
@@ -329,7 +329,7 @@ process.on('message', function(m, tcp) {
 
 整个过程示例如下
 
-![](../assets/imgs/process/handle-send.png) 
+![](../../assets/imgs/process/handle-send.png) 
 
 以发送的TCP服务器句柄为例，子进程收到消息后的还原过程如下所示：
 

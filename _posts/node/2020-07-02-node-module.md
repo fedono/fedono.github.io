@@ -20,16 +20,46 @@ Node 中引入模块，需要经历三个步骤
 
 文件模块则是在运行时动态加载，需要完整的路径分析、文件定位、编译执行过程，速度比核心模块慢
 
+### JavaScript 模块的编译
+
+每个模块文件中存在 `require`, `exports`, `module` 这三个变量，每个模块中还有`__filename` 和 `__dirname_ `，他们从何而来？
+
+在编译的过程中，Node 对获取的JavaScript文件内容进行了头尾包装，在头部添加了 `(function(exports, require, module, __filename, __dirname) {\n` 在尾部添加了 `\n})` 。
+
+一个正常的JavaScript 文件会被包装如下
+
+```js
+(function(exports, require, module, __filename, __dirname) {
+  var math = require('math');
+  exports.area = function(radius) {
+    return Math.PI * radius * radius;
+  };
+});
+```
+
+ 这样每个模块文件之间都进行了作用域隔离。包装之后的代码会通过vm 原生模块的 `runInThisContext()` 发放执行（类似eval，只是具有明确上下文，不污染全局），返回一个具体的function对象。最后，将当前模块对象的 exports 属性，require() 方法，module(模块对象自身)，以及在文件定位中得到的完整文件路径和文件目录作为参数传递给这个 funtion() 执行。
 
 
----
 
-刚才想到了两个事
+为何存在 exports 的情况下，还存在 module.exports。理想情况下，只要赋值给 exports 即可。
 
-- 一个是想到了在朋友圈发看了一本书的事
+```js
+exports = function() {
+  // my code
+};
+```
 
-  当时想到如果有人问我是哪本书，我内心就一紧，认为如果书太简单，会不会被说『哦，我好早就看过了』，感觉就有种我再看很简单的书的感觉，想到这个可能就不会发这条朋友圈了
+但是通常会得到一个失败的结果，起原因在于，exports 对象是通过形参的方式传入的，直接赋值形参会改变形参的引用，但不能改变作用域外的值。测试代码如下
 
-  后来又想到一个委婉的回答，就是直接说『深入浅出XXX』而不说具体的书名
+```js
+var change = function(a) {
+  a = 100;
+  console.log(a); // 100
+};
 
-- 二是当初鹏举他们从鹏寰搬到科技园这边，他们当时和一平在旁边打招呼聊天，就离我不远，我完全也可以过去，但是内心的那种自我不足，会有那种打招呼，但是气场不够，让人觉得尴尬的那种打招呼，其实大大方方的打招呼就可以，但还是内心自我并没有完全的养成。
+var a = 10;
+change(a);
+console.log(a); // 10
+```
+
+如果要达到 require 引入一个类的效果，请赋值给 module.exports 对象。这个迂回方案不改变形参的引用。

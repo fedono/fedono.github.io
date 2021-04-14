@@ -32,8 +32,6 @@ author: "fedono"
 
 
 
-
-
 - amis 和 formily 的相同与区别
 
   - formily 主要的还是在处理 form 的数据提交，表单联动
@@ -41,12 +39,11 @@ author: "fedono"
     - formily 集成了 next/antd/meet 两个组件库，文档还是倾向于开发者能够快速的实现表单功能
 
     - **数据联动**：有实现方式的差异，比如表单的联动，amis 都是完全通过在json 配置中来对其他的表单的显隐来做操作，formily 需要使用 observer/subscribe 来操作对应组件数据的
-
-      - amis 可以支持显隐联动，这点可以通过 visibleOn 来支持
+- amis 可以支持显隐联动，这点可以通过 visibleOn 来支持
     - 手动更新，如指定组件的名称来实现 reload
-      
+    
   - 自动监听，依赖变化，如在 componentWillReceiveProps 中监听 url 中的参数来达到自动触发更新
-      
+    
   - formily 划分为自己定义的核心功能，以及对于相关组件库的改造的，amis 划分为渲染器和可视化编辑器以及平台功能（formily 也有 editor 啊
   
   - formily 支持使用jsx 和 json-schema 的形式来编写组件，amis 则是使用 json-schema 的形式以及拖拽的形式
@@ -164,7 +161,7 @@ author: "fedono"
    - react-jsonschema-form  
      - [react-jsonschema-form](https://github.com/rjsf-team/react-jsonschema-form) 这个库几乎是完整的按照 `json-schema` 的协议来写的，非常多的基于`json-schema` 来做的页面搭建几乎都没有完整的实现`json-schame` 的语法，只有这个实现了。
      - 这个库有验证功能，可自定义插件和主题，但是高级一点的功能没有，比如表单的联动
-     - rjsf 的设计其实也非常好，内部每一个组件都是 `Widget` 的形式来注册，这样在拓展外部组件的时候，也是同样的方式
+     - react-jsonschema-form   的设计其实也非常好，内部每一个组件都是 `Widget` 的形式来注册，这样在拓展外部组件的时候，也是同样的方式
      - 核心组成其实就是两个，一个是 `widget` 还有一个就是`field` 
        - 现在还没搞懂 `field` 到底是要干什么，内部也是通过调用`Widget` 的形式，然后把所有的参数传给`widget` 
      - 基础的组件比较少，也没有数据管理，是一个

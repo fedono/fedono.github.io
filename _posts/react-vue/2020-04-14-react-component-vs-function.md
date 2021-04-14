@@ -18,15 +18,15 @@ React team 曾在 2018 年 10 月介绍 react-hooks 时，描述了 class-based 
 
 使用基于函数组合的 react-hooks 模式，我们发现，原来数据和行为的关联和复用，有其它思路。
 
-![img](../assets/react-component-vs-function/component.png)
+![img](../../assets/react-component-vs-function/component.png)
 
 在 class-component 里，我们需要在同一个生命周期里做不同的事情，并且在不同的生命周期里协调同一件事情的不同阶段。
 
-![img](../assets/react-component-vs-function/state.png)
+![img](../../assets/react-component-vs-function/state.png)
 
 我们要把状态都集中在 state 中，通过隐式的 this 和 setState 方法去访问和更新状态。
 
-![img](../assets/react-component-vs-function/state-2.png)
+![img](../../assets/react-component-vs-function/state-2.png)
 
 在 function-component 里，我们则能将同一件事情的数据和行为封装到一个 custom hooks 里，使用时不需要再考虑协调问题，可以简单的获取数据或触发特定行为。
 

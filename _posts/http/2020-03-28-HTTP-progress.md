@@ -35,25 +35,25 @@ author: "fedono"
 
     - HTTP/2 于 2015年5月正式推出，以“Request for Comments: 7540”（征求修正意见书，编号 7540 ）正式发表。 HTTP/2 在 HTTP/1.1 的基础上保持原有语义和功能不变，但极大地提升了性能。 HTTP/2 整体的优化设计包括以下5个方面。
 
-      - ![image-20200328110056991](../assets/imgs/http/http2-bin.png)
+      - ![image-20200328110056991](../../assets/imgs/http/http2-bin.png)
 
-      - ![image-20200328110119410](../assets/imgs/http/http2-multi.png)
+      - ![image-20200328110119410](../../assets/imgs/http/http2-multi.png)
 
         ![image-20200328110201102](/Users/zengdeping/Library/Application Support/typora-user-images/image-20200328110201102.png)
 
-      - ![image-20200328110210272](../assets/imgs/http/http2-priority.png)
+      - ![image-20200328110210272](../../assets/imgs/http/http2-priority.png)
 
-      - ![image-20200328110222133](../assets/imgs/http/http2-compress.png)
+      - ![image-20200328110222133](../../assets/imgs/http/http2-compress.png)
 
-        ![image-20200328110230964](../assets/imgs/http/http-compress-2.png)
+        ![image-20200328110230964](../../assets/imgs/http/http-compress-2.png)
 
-      - ![image-20200328110240260](../assets/imgs/http/http2-service-push.png)
+      - ![image-20200328110240260](../../assets/imgs/http/http2-service-push.png)
 
         
 
 - URI 和 URL
 
-  ![image-20200328104954753](../assets/imgs/http/url-urI.png)
+  ![image-20200328104954753](../../assets/imgs/http/url-urI.png)
 
   - 一个完整的 URL 一般由7个部分组成，如下所示
 
