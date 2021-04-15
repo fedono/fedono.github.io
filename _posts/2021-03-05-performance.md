@@ -92,6 +92,12 @@ author: "fedono"
 
 
 
+通过 navigation 中的参数来计算当前渲染页面的时间 | [来源](https://www.w3.org/TR/navigation-timing/)
+
+![img](../assets/imgs/web-performance/navigation.png)
+
+
+
 ## 参考
 
 - [从web-vitals到PerformanceObserver](https://juejin.im/post/6844904158076600334) 

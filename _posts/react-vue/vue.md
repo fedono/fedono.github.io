@@ -1,7 +1,7 @@
 - 在那个生命周期中做了什么事
 
   - 在 created 中数据是否是响应式的
-- 在 
+- 在 vue-runtime-compiler 与 vue-runtime-only 的区别
   
 - computed 和 watch 的区别是什么
 

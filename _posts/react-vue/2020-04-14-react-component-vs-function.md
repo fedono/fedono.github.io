@@ -32,6 +32,11 @@ React team 曾在 2018 年 10 月介绍 react-hooks 时，描述了 class-based 
 
 思考一下，react-hooks 模式如何使代码复用变得更简单，它跟 class-component 的差别是什么？
 
+- 可以使用 hooks 代替很多的 class 中的很多周期函数，比如 useEffect 来代替 componentDidMount/useCallback 来代替 shouComponentUpdate 来决定是否更新
+- 那什么是 function 组件不能代替的呢
+  - error boundary 在 class 组件中有 componentDidCatch ，但是在 function 组件中没有
+  - 
+
 差别是，对象这个概念的瓦解——数据、行为及其关联是三个维度，它们不应被捆绑在对象中。
 
 数据可以单独声明（useState），行为也可以单独声明（useEffect），数据和行为可以进行可选的关联（custom-hooks）。

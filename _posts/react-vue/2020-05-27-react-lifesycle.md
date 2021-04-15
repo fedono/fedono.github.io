@@ -62,11 +62,9 @@ class Example extends React.Component {
 
 ## componentDidMount
 
-- 在componentDidMount中添加加事件监听
+- 在componentDidMount中添加事件监听
   
   react只能保证componentDidMount-componentWillUnmount成对出现，componentWillMount可以被打断或调用多次，因此无法保证事件监听能在unmount的时候被成功卸载，可能会引起内存泄露
-  
-  
   
 - pureComponent 好在哪？ 
   
@@ -141,6 +139,26 @@ class Example extends React.Component {
 ## componentWillReceiveProps
 
 与 `componentWillUpdate` 类似，`componentWillReceiveProps` 可能在一次更新中被多次调用。因此，避免在此方法中产生副作用非常重要。相反，应该使用 `componentDidUpdate`，因为它保证每次更新只调用一次：
+
+## 为何移除 componentWillUpdate
+
+大多数开发者使用 componentWillUpdate 的场景是配合 componentDidUpdate，分别获取 rerender 前后的视图状态，进行必要的处理。但随着 React 新的 suspense、time slicing、异步渲染等机制的到来，render 过程可以被分割成多次完成，还可以被暂停甚至回溯，这**导致 componentWillUpdate 和 componentDidUpdate 执行前后可能会间隔很长时间**，足够使用户进行交互操作更改当前组件的状态，这样可能会导致难以追踪的 BUG。
+
+React 新增的 getSnapshotBeforeUpdate 方法就是为了解决上述问题，因为 getSnapshotBeforeUpdate 方法是在 componentWillUpdate 后（如果存在的话），在 React 真正更改 DOM 前调用的，它获取到组件状态信息更加可靠。
+
+除此之外，getSnapshotBeforeUpdate 还有一个十分明显的好处：它调用的结果会作为第三个参数传入 componentDidUpdate，避免了 componentWillUpdate 和 componentDidUpdate 配合使用时将组件临时的状态数据存在组件实例上浪费内存，getSnapshotBeforeUpdate 返回的数据在 componentDidUpdate 中用完即被销毁，效率更高。
+
+
+
+使用 hooks  | [来源](https://wavez.github.io/react-hooks-lifecycle/)
+
+![image-20210415172828625](../../assets/imgs/react/hooks-lifycycle.png)
+
+
+
+在 react >= 16.4 的生命周期图，[来源](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+
+![image-20210415171439196](../../assets/imgs/react/lifecycle-16.4.png)
 
 
 

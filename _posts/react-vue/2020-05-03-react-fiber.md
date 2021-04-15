@@ -66,11 +66,11 @@ function numberAdd() {
 
 要保证JS运行的流畅性，所以需要每一帧都需要足够的时间，正常保持流畅是需要每一帧 33ms，这一帧里面，react 渲染应用需要22ms，就一定要尽量就给浏览器11ms，这样浏览器才能有足够的动画渲染到页面中，保证给用户看到的是流畅的
 
-![image-20200516075305694](../assets/imgs/react-scheduler/render-time.png)
+![image-20200516075305694](../../assets/imgs/react-scheduler/render-time.png)
 
 但是如果JS 运行的时间超过了33ms，那么久需要借用下一帧，如下图，这样下一帧就只剩下20ms，那么如何才能保证每一帧里浏览器的时间足够渲染，保证流畅性呢，这就是 react scheduler 的作用
 
-![image-20200516075752155](../assets/imgs/react-scheduler/render-time-1.png)
+![image-20200516075752155](../../assets/imgs/react-scheduler/render-time-1.png)
 
 
 
