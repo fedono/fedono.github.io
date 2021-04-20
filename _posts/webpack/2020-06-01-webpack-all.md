@@ -115,7 +115,7 @@ app.listen(3000, function () {
 
 5. bundle.js: 构建输出的文件
 
-![image-20200601141734312](../assets/imgs/webpack-all/hot-module.png)
+![image-20200601141734312](../../assets/imgs/webpack-all/hot-module.png)
 
 ## webpack 打包库和组件
 
@@ -441,7 +441,12 @@ module.exports = function(content) {
 
   publicPath： 打包出来的资源的 URL 前缀（虽然名为打包，但是这个配置项在生产模式和开发模式中都很重要，因为开发模式就是打包在内存中），即在浏览器中访问的路径的前缀。可以填写相对路径或者绝对路径：
 
-  >  参考[Webpack 中 path/publicPath/contentBase 的关系](https://github.com/fi3ework/blog/issues/39)
+  >  参考[Webpack 中 path/publicPath/contentBase 的关系](https://github.com/fi3ework/blog/issues/39) 
+  
+- contentHash 和 chunkHash 的区别是什么
+
+  - 首先 contentHash 好理解，是根据文件内容来生成的 hash 值
+  - chunkHash 则是因为需要分包，那么会根据文件的依赖来进行分析，比如index.js与 index.css 属于一个模块的，那么他们两的 chunkHash就是一样的，因为化分 chunk 就是根据加载当前文件时，只加载当前文件所需要的依赖，这时候当前文件和依赖项就是同一个 chunkHash
 
 ## 参考
 

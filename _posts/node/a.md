@@ -19,6 +19,7 @@ node 在面试中会问到的点
 
     - readable 如 fs.createReadStream()
   - writeable  如 fs.createWriteStream()
+    
     - duplex 可读又可写的流  如 net.Socket
   - transform 在读写过程中可以修改或转换数据的 `Duplex` 流，例如 [`zlib.createDeflate()`](http://nodejs.cn/api/zlib.html#zlib_zlib_createdeflate_options) 
     
