@@ -1,3 +1,5 @@
+- 补充基础
+  - https://www.cnblogs.com/kubidemanong/category/1263428.html
 - amis/编辑器原理，平台功能
   - 关于编辑器的
     - 把[h5-Dooring](https://github.com/MrXujiang/h5-Dooring) 弄懂，研究一下可视化的编辑器的竞品通常都有哪些方案

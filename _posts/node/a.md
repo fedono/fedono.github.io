@@ -49,17 +49,16 @@ node 在面试中会问到的点
     - 《深入浅出Node.js》中第9.2节 多进程架构 
     - [Nodejs进程间通信](http://www.ayqy.net/blog/nodejs%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/)
       - 使用 child_process 创建的父子进程，可以使用 send / on('message') 事件进行发送数据和接收数据，这是借助内置的 IPC 机制通信
-      - 
-
-  - 什么是IO多路复用
-
-    - IO 多路复用是什么意思？ - 罗志宇的回答 - 知乎 https://www.zhihu.com/question/32163005/answer/55772739
-
-  - libuv 是干什么的 
-
-    > the C library that implements the Node.js event loop and all of the asynchronous behaviors of the platform
+    
+- 什么是IO多路复用
+  
+  - IO 多路复用是什么意思？ - 罗志宇的回答 - 知乎 https://www.zhihu.com/question/32163005/answer/55772739
+  
+- libuv 是干什么的 
+  
+  > the C library that implements the Node.js event loop and all of the asynchronous behaviors of the platform
     >
-
+  
 - 你们的 node 的服务端应用如何部署
 
 - Node 中的接口如何优化
