@@ -10,15 +10,15 @@
   // src/renderers/Form/Control.tsx:306
   controlRef(control: any) {
     const {addHook, removeHook, formStore: form} = this.props;
-
+  
     // 因为 control 有可能被 n 层 hoc 包裹。
     while (control && control.getWrappedInstance) {
       control = control.getWrappedInstance();
     }
-
+  
     this.control = control;
   }
-
+  
   scoped.registerComponent(this.control);
   ```
   

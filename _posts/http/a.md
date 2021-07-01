@@ -12,6 +12,10 @@
     - last-modified/if-modified-since
     - etag/if-none-match
 
+- 服务器推送
+  - 除了有  http2
+  - 还有 websocket 
+
 
 
 ## 参考
