@@ -88,13 +88,45 @@ author: "fedono"
 
 ## 问题
 
-- 什么是 CRP,即关键渲染路径(Critical Rendering Path)? 如何优化 ?
+- 什么是 CRP，即关键渲染路径(Critical Rendering Path) ? 如何优化 ?
+
+  关键渲染路径是浏览器将 HTML CSS JavaScript 转换为在屏幕上呈现的像素内容所经历的一系列步骤。也就是我们上面说的浏览器渲染流程。
+
+  为尽快完成首次渲染,我们需要最大限度减小以下三种可变因素:
+
+  - 关键资源的数量: 可能阻止网页首次渲染的资源。
+  - 关键路径长度: 获取所有关键资源所需的往返次数或总时间。
+  - 关键字节: 实现网页首次渲染所需的总字节数,等同于所有关键资源传送文件大小的总和。
 
 
 
 通过 navigation 中的参数来计算当前渲染页面的时间 | [来源](https://www.w3.org/TR/navigation-timing/)
 
 ![img](../assets/imgs/web-performance/navigation.png)
+
+有个[岳鹰全景监控](https://yueying-docs.effirst.com/) 的监控工具，监控了前端的一些性能，是根据上图来定义的性能指标，或许有一点参考性吧
+
+> 其实看看这种监控工具的重点参数确实也是很重要
+>
+> 因为来做这些监控工具的，至少是专业的，来分析某些要点是需要监控的
+>
+> 那时候字节也是问你，在这些监控工具中，你关心哪些性能
+>
+> 参考 [岳鹰全景监控 - 页面性能](https://yueying-docs.effirst.com/guide-perf.html) 也可以看看其他竞品监控的性能
+
+### 指标说明 - [来源](https://yueying-docs.effirst.com/faq-perf.html)
+
+| 指标名称     | 描述                               | 计算方式                                  |
+| ------------ | ---------------------------------- | ----------------------------------------- |
+| 首字节       | 收到首字节的时间                   | responseStart - fetchStart                |
+| DOM Ready    | HTML加载完成时间                   | domContentLoadedEventEnd - fetchStart     |
+| 页面完全加载 | 页面完全加载时间                   | loadEventStart - fetchStart               |
+| DNS查询      | DNS解析耗时                        | domainLookupEnd - domainLookupStart       |
+| TCP连接      | TCP链接耗时                        | connectEnd - connectStart                 |
+| 请求响应     | Time to First Byte(TTFB)           | responseStart - requestStart              |
+| 内容传输     | 数据传输耗时                       | responseEnd - responseStart               |
+| DOM解析      | DOM 解析耗时                       | domInteractive - responseEnd              |
+| 资源加载     | 资源加载耗时(页面中同步加载的资源) | loadEventStart - domContentLoadedEventEnd |
 
 
 

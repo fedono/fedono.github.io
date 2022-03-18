@@ -4,7 +4,9 @@
    - 包含react/vue
    - 选择数据管理库，mobx/redux/vuex 以及是如何与组件代码整合的
    - webpack 配置，rollup 等
-
+   - 写一个 tpl
+     - [来吧，造个模板引擎轮子——开篇](http://jimliu.net/2015/07/13/make-a-js-tpl-engine/)
+   
 1. 熟悉打包工作的流程
 
    - [简要分析前端代码从 Babel 编译到打包的流程](https://github.com/fi3ework/blog/issues/31) 
@@ -61,7 +63,7 @@
 
 ---
 
-- 找一些健身的文章和视频看，自己总结
+- 找一些健身的文章和视频看z，自己总结
 - 英语继续看张道真的，还是张满胜的更好一点，张道真的只能用来补细节，整体结构还是张满胜的好
 
 

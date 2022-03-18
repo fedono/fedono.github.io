@@ -6,7 +6,7 @@
 
 - react 中的 useEffect / useLayerEffect 的区别是什么
   - 生命周期会有不一致
-  - 那个的生命周期更前
+  - 哪个的生命周期更前
   - useEffect 实在渲染器，是异步的，可能会出现闪动的情况
   - useLayerEffect 这里相当于 didMount，是同步的，所以日常如果使用useEffect 出现了闪动，就用这个
 - 合成事件

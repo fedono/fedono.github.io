@@ -1,11 +1,3 @@
-<!--
- * @Author: your name
- * @Date: 2021-06-03 20:41:36
- * @LastEditTime: 2021-06-03 21:15:23
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /_posts/amis/amis 接入 antd.md
--->
 - 如果要让 amis 发挥在业界的作用，就需要让 amis 接入 antd 
 如何来接入 antd，一个是 amis 都是通过组件注册进来的，那么就可以让每个 antd 的组件导出让后再注入
  amis 中，然后新的系统，也是可以使用 amis 的逻辑，或者使用 antd 的组件

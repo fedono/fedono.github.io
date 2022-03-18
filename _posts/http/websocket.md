@@ -26,6 +26,40 @@
 
 
 
+## 其他
+
+### STOMP 
+
+为什么会有一个叫做 STOMP 的东西？
+
+既然都有了 socket，为什么还会有这种，而且文档中还介绍说是一种这个也是一种文本消息的协议，那 socket 是啥，为啥和 socket 有联系？
+
+> [STOMP](http://stomp.github.com/) is a simple text-orientated messaging protocol
+
+看标题应该就明白了为什么会有 STOMP 这种东西了
+
+> # STOMP Over WebSocket
+
+也就是 STOMP 是更高阶的 websocket，看下面的介绍，也就是 stomp 是一个通信标准，只要实现了这个标准就可以，你可以使用任何语言来实现，只要实现了就能够彼此通信。
+
+> STOMP provides an interoperable wire format so that STOMP clients can communicate with any STOMP message broker to provide easy and widespread messaging interoperability among many languages, platforms and brokers.
+
+[stomp 1.2 标准](https://stomp.github.io/stomp-specification-1.2.html) 
+
+stomp 不仅仅是支持web socket 的，stompjs 的说明如下 
+
+> This library provides a STOMP client for Web browser (using Web Sockets) or node.js applications (either using raw TCP sockets or Web Sockets).
+
+
+
+### Sockjs / sockjs-client
+
+有点没明白为什么会有这两个东西，而且看 readme 好像很多还是相同的，这是在搞什么？
+
+好像明白了 sockjs-client 是用在浏览器端的，而 sockjs 其实就是 sockjs-node，是用在服务端的 
+
+
+
 ## 参考
 
 - [WebSocket 教程](http://www.ruanyifeng.com/blog/2017/05/websocket.html?utm_source=tuicool&utm_medium=referral) 

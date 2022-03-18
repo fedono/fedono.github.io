@@ -13,6 +13,7 @@
 - [deep-in-fusion-next](https://github.com/fedono/deep-in-fusion-next)
 - [state-manage](https://github.com/fedono/state-manage)
 - [router](https://github.com/fedono/router)  
+- [react-hooks](https://github.com/fedono/react-hooks)
 
 ## 稍微大一点的方向  
 - [performance](https://github.com/fedono/performance)

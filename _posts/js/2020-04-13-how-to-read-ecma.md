@@ -12,3 +12,4 @@ author: "fedono"
 - [读懂 ECMAScript 规格](https://es6.ruanyifeng.com/#docs/spec) 
   - 阮一峰老师写的，还一直没有看
 
+- winter 的前端进阶中有一节课，讲的更清晰，这样就知道整个规范有多少节，每一节是讲什么的，然后知道整个文档的大纲，每次遇到问题就知道去哪里找了

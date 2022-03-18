@@ -128,7 +128,7 @@ console.log(Function.prototype.__proto__ === Object.prototype) // true
 
 最后肯定是要放一张图的
 
-![img](../assets/imgs/prototype/prototype.jpg)
+![img](../../assets/imgs/prototype/prototype.jpg)
 
 
 

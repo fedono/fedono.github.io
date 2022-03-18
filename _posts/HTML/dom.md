@@ -1,0 +1,2 @@
+- [HTML 标准](https://html.spec.whatwg.org/multipage/)
+- [Dom 标准文档](https://dom.spec.whatwg.org/#ranges)
