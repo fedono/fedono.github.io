@@ -20,3 +20,10 @@ CSS  也是需要体系化的来学习
     - [15 Fonts](https://www.w3.org/TR/CSS2/fonts.html#q15.0)
     - [16 Text](https://www.w3.org/TR/CSS2/text.html#q16.0)
     - [17 Tables](https://www.w3.org/TR/CSS2/tables.html#q17.0)
+
+---
+
+CSS2 标准
+
+- 2-2 官方 https://www.w3.org/html/ig/zh/wiki/CSS2
+- 2-1 http://www.ayqy.net/doc/css2-1/cover.html

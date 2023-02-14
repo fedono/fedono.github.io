@@ -36,3 +36,4 @@
 
 - 怎样学习和理解计算机组成原理？ - 小林coding的回答 - 知乎 https://www.zhihu.com/question/20706264/answer/2020100029
 
+- [计算机速成课 Crash Course Computer Science](https://www.bilibili.com/video/BV1iK411g7iK/?spm_id_from=333.788.recommend_more_video.0)
